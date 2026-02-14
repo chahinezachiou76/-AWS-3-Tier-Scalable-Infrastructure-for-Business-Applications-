@@ -1,5 +1,10 @@
 #  AWS 3-Tier Scalable Infrastructure for Business Applications  
 (Terraform | High Availability | Security | Cost Optimization)
+<details>
+  <summary><b>Click to view detailed Architecture Diagram</b></summary>
+  <br>
+  <img src="multi az.drawio.png" width="100%">
+</details>
 
 ##  Project Overview
 This project implements a production-ready 3-tier cloud infrastructure on AWS using Terraform (Infrastructure as Code).
