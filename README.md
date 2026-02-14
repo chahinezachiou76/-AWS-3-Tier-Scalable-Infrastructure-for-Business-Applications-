@@ -27,10 +27,10 @@ Solution implemented:
 - Multi-AZ deployment
 
 Business Value:
-✔ High availability  
-✔ Automatic scaling  
-✔ Improved customer experience  
-✔ Revenue protection  
+ High availability  
+ Automatic scaling  
+ Improved customer experience  
+ Revenue protection  
 
 ---
 
@@ -44,10 +44,10 @@ Solution implemented:
 - Security Groups and controlled access
 
 Business Value:
-✔ Reduced attack surface  
-✔ Strong security posture  
-✔ Better data protection  
-✔ Compliance-ready architecture  
+ Reduced attack surface  
+ Strong security posture  
+ Better data protection  
+ Compliance-ready architecture  
 
 ---
 
@@ -59,9 +59,9 @@ Solution implemented:
 - Infrastructure as Code (Terraform)
 
 Business Value:
-✔ Cost optimization  
-✔ Pay only for what is used  
-✔ Efficient resource management  
+ Cost optimization  
+ Pay only for what is used  
+ Efficient resource management  
 
 ---
 
@@ -73,9 +73,9 @@ Solution implemented:
 - Version-controlled infrastructure
 
 Business Value:
-✔ Faster time to market  
-✔ Reduced operational risk  
-✔ Reliable deployments  
+ Faster time to market  
+ Reduced operational risk  
+ Reliable deployments  
 
 ---
 
@@ -87,7 +87,7 @@ The infrastructure follows a classic 3-tier architecture:
 
 All resources are deployed inside a custom VPC across two Availability Zones.
 
-## ⚙ Technologies Used
+##  Technologies Used
 - AWS (VPC, EC2, ALB, Auto Scaling, Route 53, WAF, RDS)
 - Terraform (Infrastructure as Code)
 - Linux
