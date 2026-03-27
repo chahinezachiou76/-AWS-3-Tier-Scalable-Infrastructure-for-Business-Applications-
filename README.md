@@ -111,3 +111,30 @@ All resources are deployed inside a custom VPC across two Availability Zones.
 - High availability and scalability
 - Secure infrastructure design
 - Professional Infrastructure as Code practices
+  ## FinOps & Cost Governance Layer
+
+Beyond just building the infrastructure, this project implements a dedicated **FinOps Layer** to ensure financial accountability and cloud cost optimization.
+
+### Governance Strategy → Implementation → Financial Impact
+
+#### 1. Automated Cost Guardrails
+- **Implementation:** AWS Budgets with SNS Alerting.
+- **Result:** Real-time monitoring that triggers alerts at 75% and 90% of the forecasted monthly spend.
+```hcl
+# Create a monthly budget to prevent cloud bill shocks
+resource "aws_budgets_budget" "multi_az_budget" {
+  name              = "monthly-total-budget"
+  budget_type       = "COST"
+  limit_amount      = "50" # Monthly limit in USD
+  limit_unit        = "USD"
+  time_unit         = "MONTHLY"
+
+  # Send notification when actual cost exceeds 80%
+  notification {
+    comparison_operator        = "GREATER_THAN"
+    threshold                  = 80
+    threshold_type             = "PERCENTAGE"
+    notification_type          = "ACTUAL"
+    subscriber_email_addresses = ["admin@example.com"]
+  }
+}
