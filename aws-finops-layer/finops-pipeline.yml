@@ -1,0 +1,25 @@
+name: FinOps Automated Governance
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  infracost_analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Infracost
+        uses: infracost/actions/setup@v2
+        with:
+          api_key: ${{ secrets.INFRACOST_API_KEY }}
+
+      - name: Generate Infracost JSON
+        run: infracost breakdown --path . --format json --out-file infracost.json
+
+      - name: Post Cost Estimate to PR
+        uses: infracost/actions/comment@v2
+        with:
+          path: infracost.json
+          behavior: update
