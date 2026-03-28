@@ -1,0 +1,47 @@
+name: "Infrastructure Multi-AZ & Audit FinOps"
+
+# Déclenchement du pipeline lors d'un push sur la branche main
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'multi-az-infra/**' # Le pipeline s'exécute uniquement pour ce projet
+
+jobs:
+  terraform-finops:
+    name: "Déploiement Terraform et Analyse de Coûts"
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Récupération du code source depuis GitHub
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      # 2. Installation et configuration de Terraform
+      - name: Configuration de Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+
+      # 3. Vérification du formatage et initialisation des modules
+      - name: Initialisation et Formatage Terraform
+        run: |
+          terraform fmt -check
+          terraform init
+
+      # 4. Analyse proactive des coûts avec Infracost (Approche FinOps)
+      # Cette étape permet d'estimer l'impact financier avant le déploiement
+      - name: Installation et Exécution d'Infracost
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+          infracost breakdown --path ./multi-az-infra
+        env:
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+
+      # 5. Génération du plan d'exécution pour validation
+      - name: Planification Terraform (Terraform Plan)
+        run: terraform plan
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
