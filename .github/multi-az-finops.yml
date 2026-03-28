@@ -1,15 +1,13 @@
-name: "Infrastructure Multi-AZ & Audit FinOps"
+name: "Infrastructure 3-Tier FinOps Audit"
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'multi-az-infra/**'
 
 jobs:
   terraform-finops:
-    name: "Déploiement Terraform et Analyse de Coûts"
+    name: "Audit FinOps et Terraform"
     runs-on: ubuntu-latest
 
     steps:
@@ -23,18 +21,18 @@ jobs:
 
       - name: Initialisation Terraform
         run: terraform init
-        working-directory: ./multi-az-infra
+        working-directory: ./environments
 
       - name: Installation et Exécution d'Infracost
         run: |
           curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
-          infracost breakdown --path ./multi-az-infra
+          infracost breakdown --path .
         env:
           INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
 
       - name: Planification Terraform
         run: terraform plan
-        working-directory: ./multi-az-infra
+        working-directory: ./environments
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
